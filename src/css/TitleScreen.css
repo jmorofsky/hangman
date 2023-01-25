@@ -1,0 +1,94 @@
+.topBar {
+    background-color: #2F2824;
+    height: 10px;
+}
+
+.title {
+    font-family: 'handShop';
+    width: 565px;
+    height: 140px;
+    margin: 10vh auto 0;
+    font-size: 100px;
+    color: #2F2824;
+    rotate: -2deg;
+    animation: title 5s ease-in-out infinite, reveal 2s;
+}
+
+.title span {
+    display: inline-block;
+}
+
+.subtitle {
+    font-family: 'Foglihten';
+    font-size: 50px;
+    width: 720px;
+    height: 85px;
+    margin: 0 auto;
+    animation: fadeIn 2s 2.25s forwards;
+    opacity: 0%;
+}
+
+.svg {
+    opacity: 75%;
+    width: 1300px;
+    margin: 0 auto;
+}
+
+.startButton {
+    font-size: 40px;
+    color: #F5EFE8;
+    font-family: 'GinAndSoda';
+    background-color: #2F2824;
+    width: 230px;
+    height: 40px;
+    padding: 0 10px 5px;
+    clip-path: polygon(2% 0, 98% 1%, 100% 50%, 98% 100%, 2% 100%, 0% 50%);
+    cursor: pointer;
+}
+
+.startWrap {
+    transition: all 0.2s ease;
+    filter: none;
+    width: 230px;
+    height: 40px;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 5px #1f1a17);
+}
+
+.startWrap:hover {
+    scale: 110%;
+}
+
+@keyframes title {
+    0% {
+        rotate: -2deg;
+    }
+
+    50% {
+        rotate: 2deg;
+    }
+
+    100% {
+        rotate: -2deg;
+    }
+}
+
+@keyframes reveal {
+    0% {
+        scale: 0;
+    }
+
+    100% {
+        scale: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}

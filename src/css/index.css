@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #F5EFE8;
+  user-select: none;
+}
+
+@font-face {
+  font-family: "handShop";
+  src: url('../fonts/Cocogoose.ttf');
+}
+
+@font-face {
+  font-family: "Foglihten";
+  src: url('../fonts/FoglihtenFr02.otf');
+}
+
+@font-face {
+  font-family: "GinAndSoda";
+  src: url('../fonts/GIN_AND_SODA.ttf');
+}
