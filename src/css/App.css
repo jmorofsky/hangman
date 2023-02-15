@@ -4,7 +4,8 @@
     height: 10px;
     width: 100vw;
     top: 0;
-    transition: all 2s ease;
+    transition: height 2s ease;
+    transition-delay: 0;
     opacity: 98%;
     z-index: 1;
 }
@@ -13,16 +14,27 @@
     height: 90vh;
 }
 
+.topBar[clicked='1'] {
+    transition-delay: 2s;
+    height: 10px;
+}
+
 .topContainer {
     position: absolute;
     top: 10px;
     width: 100vw;
-    transition: all 2s ease;
+    transition: top 2s ease;
+    transition-delay: 0;
     z-index: 1;
 }
 
 .topContainer[won='1'] {
     top: 90vh;
+}
+
+.topContainer[clicked='1'] {
+    transition-delay: 2s;
+    top: 10px;
 }
 
 .title {
@@ -145,6 +157,7 @@
     gap: 50px 50px;
     max-width: 950px;
     margin: 0 auto;
+    opacity: 0;
     animation: slideUp 1s 4s forwards;
 }
 
@@ -207,17 +220,88 @@
     animation: fadeIn 1s forwards;
 }
 
-.win {
-    position: relative;
-    font-size: 100px;
-    width: 300px;
-    height: 300px;
-    top: -1000px;
+.endContainer {
+    position: absolute;
+    top: 10vh;
+    margin: 0 auto;
+    width: 100%;
     z-index: 2;
+    text-align: center;
+}
+
+.endText {
+    box-shadow: 0 0 0 4px #F5EFE8,
+    0 0 0 10px #352E28,
+    0 0 0 12px #F5EFE8;
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 1100px;
+    margin: auto;
+    animation: slideDown 1s 1.5s forwards;
+    transform: translateY(-300px);
+}
+
+.endText span {
+    display: inline-block;
+    color: #F5EFE8;
+    font-family: 'handShop';
+    font-size: 100px;
+}
+
+.endText[clicked='1'] {
+    transform: translateY(0);
+    animation: slideUp2 1s 1s forwards;
+}
+
+.wordReveal {
+    color: #F5EFE8;
+    font-family: 'Foglihten';
+    font-size: 50px;
+    margin: 50px auto 0;
+    opacity: 0;
+    animation: fadeIn 2s 2.5s forwards;
+}
+
+.wordReveal[clicked='1'] {
+    opacity: 100%;
+    animation: close 0.6s 0.25s forwards;
+}
+
+.endButton {
+    font-size: 40px;
+    color: #F5EFE8;
+    font-family: 'GinAndSoda';
+    background-color: #211c1a;
+    width: 230px;
+    height: 40px;
+    padding: 0 10px 5px;
+    clip-path: polygon(2% 0, 98% 1%, 100% 50%, 98% 100%, 2% 100%, 0% 50%);
+    cursor: auto;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    animation: reveal 0.25s 4.5s forwards;
+    opacity: 0;
+    margin: 500px auto 0;
+}
+
+.endButton[clicked='1'] {
+    opacity: 100%;
+    cursor: auto;
+    animation: revealReverse 0.25s forwards;
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-300px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 @keyframes slideUp {
     0% {
+        opacity: 100%;
         top: 100vh;
     }
 
@@ -226,7 +310,18 @@
     }
 
     100% {
+        opacity: 100%;
         top: calc(-33vh + 150px);
+    }
+}
+
+@keyframes slideUp2 {
+    0% {
+        transform: translateY(0px);
+    }
+
+    100% {
+        transform: translateY(-300px);
     }
 }
 
@@ -285,7 +380,6 @@
     }
 
     100% {
-        margin-top: 0;
         scale: 0;
     }
 }

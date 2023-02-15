@@ -14,16 +14,18 @@ class App extends React.Component {
         this.state = {
             started: 0,
             word: "",
-            letters: ['fill'],
+            letters: ['placeholder'],
             strikes: 0,
             usedLetters: [],
-            won: 0
+            won: 0,
+            clicked: 0
         }
         this.handleClick = this.handleClick.bind(this)
         this.getWord = this.getWord.bind(this)
         this.trim = this.trim.bind(this)
         this.calcLetters = this.calcLetters.bind(this)
         this.checkLetter = this.checkLetter.bind(this)
+        this.playAgain = this.playAgain.bind(this)
     }
 
     getWord() {
@@ -69,11 +71,19 @@ class App extends React.Component {
 
     checkLetter(letter, e) {
         let chars = this.state.letters
-        if (this.state.usedLetters.includes(letter.toUpperCase()) != true) {
+
+        if (this.state.usedLetters.includes(letter.toUpperCase()) !== true) {
             if (chars.includes(letter.toLowerCase())) {
-                chars = chars.filter(char => char != letter.toLowerCase())
+                chars = chars.filter(char => char !== letter.toLowerCase())
                 this.setState({ letters: chars })
                 this.calcLetters()
+
+                setTimeout(() => {
+                    if (chars.length === 0) {
+                        this.setState({ won: 1 })
+                    }
+                }, 500)
+
             } else {
                 let strike = this.state.strikes
                 strike++
@@ -85,11 +95,12 @@ class App extends React.Component {
             e.target.style.transform = 'none'
             e.target.style.cursor = 'revert'
             // add style for incorrect choice
-
-            if(this.state.letters.length === 0) {
-                this.setState({won : 1})
-            }
         }
+    }
+
+    playAgain() {
+        console.log("clicked")
+        this.setState({ clicked: 1 })
     }
 
     render() {
@@ -97,8 +108,8 @@ class App extends React.Component {
 
         return (
             <div>
-                <div className="topBar" won={this.state.won}></div>
-                <div className="topContainer" won={this.state.won}>
+                <div className="topBar" won={this.state.won} clicked={this.state.clicked}></div>
+                <div className="topContainer" won={this.state.won} clicked={this.state.clicked}>
                     <svg
                         preserveAspectRatio="none"
                         viewBox="0 0 1200 120"
@@ -171,8 +182,20 @@ class App extends React.Component {
                 }
 
                 {/* end screen */}
-                {this.state.letters.length === 0 && this.state.started === 1 &&
-                    <div className="win">You Win!</div>
+                {this.state.won === 1 &&
+                    <div className="endContainer">
+                        <div className="endText" clicked={this.state.clicked}>
+                            <span style={{ transform: 'scale(1, 1.4) translateY(5px)' }}>C</span>
+                            <span style={{ transform: 'scale(1, 1.2) translateY(2px)' }}>O</span>
+                            <span style={{
+                                textDecoration: 'underline', textDecorationSkipInk: 'none', textDecorationThickness: '5px'
+                            }}>NGRATULATION</span>
+                            <span style={{ transform: 'scale(1, 1.2) translateY(2px)' }}>S</span>
+                            <span style={{ transform: 'scale(1, 1.4) translateY(8px)' }}>!</span>
+                        </div>
+                        <div className="wordReveal" clicked={this.state.clicked}>Tthe_word_was:_{this.state.word}S</div>
+                        <div className="endButton" onClick={this.playAgain} clicked={this.state.clicked}>Play Again?</div>
+                    </div>
                 }
             </div>
         )
