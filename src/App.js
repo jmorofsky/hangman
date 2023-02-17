@@ -45,6 +45,7 @@ class App extends React.Component {
 
     handleClick() {
         this.setState({ started: 1 })
+
         this.trim(this.state.word)
         setTimeout(() => {
             let letters = this.state.word.split("")
@@ -56,11 +57,11 @@ class App extends React.Component {
         let letters = this.state.word.split("")
         let letterSpans = letters.map((letter, index) => {
             if (this.state.letters.includes(letter.toLowerCase())) {
-                return <span key={index} className='letter' started={this.state.started}
+                return <span key={index} className='letter' clicked={this.state.clicked}
                     style={{ animationDelay: ((index * 0.125) + 2.6) + 's', color: '#F5EFE8' }}>{letter}
                 </span>
             } else {
-                return <span key={index} className='letter' started={this.state.started}
+                return <span key={index} className='letter' clicked={this.state.clicked}
                     style={{ animationDelay: ((index * 0.125) + 2.6) + 's', color: '#000' }}>{letter}
                 </span>
             }
@@ -70,37 +71,44 @@ class App extends React.Component {
     }
 
     checkLetter(letter, e) {
-        let chars = this.state.letters
+        if (this.state.won === 0) {
+            let chars = this.state.letters
 
-        if (this.state.usedLetters.includes(letter.toUpperCase()) !== true) {
-            if (chars.includes(letter.toLowerCase())) {
-                chars = chars.filter(char => char !== letter.toLowerCase())
-                this.setState({ letters: chars })
-                this.calcLetters()
+            if (this.state.usedLetters.includes(letter.toUpperCase()) !== true) {
+                if (chars.includes(letter.toLowerCase())) {
+                    chars = chars.filter(char => char !== letter.toLowerCase())
+                    this.setState({ letters: chars })
+                    this.calcLetters()
 
-                setTimeout(() => {
-                    if (chars.length === 0) {
-                        this.setState({ won: 1 })
-                    }
-                }, 500)
+                    setTimeout(() => {
+                        if (chars.length === 0) {
+                            this.setState({ won: 1 })
+                        }
+                    }, 500)
 
-            } else {
-                let strike = this.state.strikes
-                strike++
-                this.setState({ strikes: strike })
+                } else {
+                    let strike = this.state.strikes
+                    strike++
+                    this.setState({ strikes: strike })
+                }
+                this.setState({ usedLetters: [...this.state.usedLetters, letter] })
+
+                e.target.style.opacity = '50%'
+                e.target.style.transform = 'none'
+                e.target.style.cursor = 'revert'
+                // add style for incorrect choice
             }
-            this.setState({ usedLetters: [...this.state.usedLetters, letter] })
-
-            e.target.style.opacity = '50%'
-            e.target.style.transform = 'none'
-            e.target.style.cursor = 'revert'
-            // add style for incorrect choice
         }
     }
 
     playAgain() {
-        console.log("clicked")
         this.setState({ clicked: 1 })
+        this.getWord()
+        this.setState({ started: 0, strikes: 0, usedLetters: [] })
+
+        setTimeout(() => {
+            this.setState({ won: 0, clicked: 0 })
+        }, 2000)
     }
 
     render() {
@@ -114,7 +122,7 @@ class App extends React.Component {
                         preserveAspectRatio="none"
                         viewBox="0 0 1200 120"
                         xmlns="http://www.w3.org/2000/svg"
-                        style={{ fill: '#2F2824', width: '50%', height: 25, opacity: '98%' }}>
+                        style={{ fill: '#2F2824', width: '50%', height: 25 }}>
                         <path d="M60 120L0 0h120L60 120zm120 0L120 0h120l-60 120zm120 0L240 0h120l-60 120zm120 0L360 0h120l-60 
                         120zm120 0L480 0h120l-60 120zm120 0L600 0h120l-60 120zm120 0L720 0h120l-60 120zm120 0L840 0h120l-60 
                         120zm120 0L960 0h120l-60 120zm120 0L1080 0h120l-60 120z" />
@@ -123,7 +131,7 @@ class App extends React.Component {
                         preserveAspectRatio="none"
                         viewBox="0 0 1200 120"
                         xmlns="http://www.w3.org/2000/svg"
-                        style={{ fill: '#2F2824', width: '50%', height: 25, opacity: '98%' }}>
+                        style={{ fill: '#2F2824', width: '50%', height: 25 }}>
                         <path d="M60 120L0 0h120L60 120zm120 0L120 0h120l-60 120zm120 0L240 0h120l-60 120zm120 0L360 0h120l-60 
                         120zm120 0L480 0h120l-60 120zm120 0L600 0h120l-60 120zm120 0L720 0h120l-60 120zm120 0L840 0h120l-60 
                         120zm120 0L960 0h120l-60 120zm120 0L1080 0h120l-60 120z" />
@@ -168,7 +176,7 @@ class App extends React.Component {
                 </div>
 
                 {this.state.started === 1 &&
-                    <div className="letterBox" >
+                    <div className="letterBox">
                         {this.calcLetters()}
                     </div>
                 }
