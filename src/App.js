@@ -90,6 +90,10 @@ class App extends React.Component {
                     let strike = this.state.strikes
                     strike++
                     this.setState({ strikes: strike })
+
+                    if (strike > 5) {
+                        this.setState({ won: 1 })
+                    }
                 }
                 this.setState({ usedLetters: [...this.state.usedLetters, letter] })
 
@@ -104,10 +108,10 @@ class App extends React.Component {
     playAgain() {
         this.setState({ clicked: 1 })
         this.getWord()
-        this.setState({ started: 0, strikes: 0, usedLetters: [] })
+        this.setState({ started: 0, usedLetters: [] })
 
         setTimeout(() => {
-            this.setState({ won: 0, clicked: 0 })
+            this.setState({ strikes: 0, won: 0, clicked: 0 })
         }, 2000)
     }
 
@@ -192,15 +196,28 @@ class App extends React.Component {
                 {/* end screen */}
                 {this.state.won === 1 &&
                     <div className="endContainer">
-                        <div className="endText" clicked={this.state.clicked}>
-                            <span style={{ transform: 'scale(1, 1.4) translateY(5px)' }}>C</span>
-                            <span style={{ transform: 'scale(1, 1.2) translateY(2px)' }}>O</span>
-                            <span style={{
-                                textDecoration: 'underline', textDecorationSkipInk: 'none', textDecorationThickness: '5px'
-                            }}>NGRATULATION</span>
-                            <span style={{ transform: 'scale(1, 1.2) translateY(2px)' }}>S</span>
-                            <span style={{ transform: 'scale(1, 1.4) translateY(8px)' }}>!</span>
-                        </div>
+                        {this.state.strikes <= 5 &&
+                            <div className="endText" clicked={this.state.clicked}>
+                                <span style={{ transform: 'scale(1, 1.4) translateY(5px)' }}>C</span>
+                                <span style={{ transform: 'scale(1, 1.2) translateY(2px)' }}>O</span>
+                                <span style={{
+                                    textDecoration: 'underline', textDecorationSkipInk: 'none', textDecorationThickness: '5px'
+                                }}>NGRATULATION</span>
+                                <span style={{ transform: 'scale(1, 1.2) translateY(2px)' }}>S</span>
+                                <span style={{ transform: 'scale(1, 1.4) translateY(8px)' }}>!</span>
+                            </div>
+                        }
+
+                        {this.state.strikes > 5 &&
+                            <div className="endText" clicked={this.state.clicked}>
+                                <span style={{ transform: 'scale(1, 1.4) translateY(5px)' }}>Y</span>
+                                <span style={{
+                                    textDecoration: 'underline', textDecorationSkipInk: 'none', textDecorationThickness: '5px'
+                                }}>OU LOSE</span>
+                                <span style={{ transform: 'scale(1, 1.4) translateY(8px)' }}>!</span>
+                            </div>
+                        }
+
                         <div className="wordReveal" clicked={this.state.clicked}>Tthe_word_was:_{this.state.word}S</div>
                         <div className="endButton" onClick={this.playAgain} clicked={this.state.clicked}>Play Again?</div>
                     </div>
