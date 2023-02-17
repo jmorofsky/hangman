@@ -7,6 +7,7 @@ import larm from "./images/larm.png"
 import rarm from "./images/rarm.png"
 import lleg from "./images/lleg.png"
 import rleg from "./images/rleg.png"
+import incorrect from "./images/incorrect.png"
 
 class App extends React.Component {
     constructor(props) {
@@ -94,13 +95,14 @@ class App extends React.Component {
                     if (strike > 5) {
                         this.setState({ won: 1 })
                     }
+
+                    e.target.style.backgroundImage = 'url(' + incorrect + ')'
                 }
                 this.setState({ usedLetters: [...this.state.usedLetters, letter] })
 
                 e.target.style.opacity = '50%'
                 e.target.style.transform = 'none'
                 e.target.style.cursor = 'revert'
-                // add style for incorrect choice
             }
         }
     }
@@ -188,7 +190,7 @@ class App extends React.Component {
                 {this.state.started === 1 &&
                     <ul className='keyBox'>
                         {alphabet.map(letter => (
-                            <li key={letter} className='key' onClick={(e) => this.checkLetter(letter, e)}>{letter}</li>
+                            <li key={letter} clicked={0} className='key' onClick={(e) => this.checkLetter(letter, e)}>{letter}</li>
                         ))}
                     </ul>
                 }
@@ -219,7 +221,9 @@ class App extends React.Component {
                         }
 
                         <div className="wordReveal" clicked={this.state.clicked}>Tthe_word_was:_{this.state.word}S</div>
-                        <div className="endButton" onClick={this.playAgain} clicked={this.state.clicked}>Play Again?</div>
+                        <div className="endWrap">
+                            <div className="endButton" onClick={this.playAgain} clicked={this.state.clicked}>Play Again?</div>
+                        </div>
                     </div>
                 }
             </div>

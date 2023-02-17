@@ -105,7 +105,6 @@
 
 .startWrap {
     transition: all 0.2s ease;
-    filter: none;
     width: 230px;
     height: 40px;
     margin: 0 auto;
@@ -162,6 +161,14 @@
     padding: 0 5px 5px;
     transition: all ease-in-out 0.1s;
     box-shadow: 0 10px 5px #2F2824;
+    background-image: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.key[clicked='1'] {
+    background-color: red;
 }
 
 .key:hover {
@@ -258,18 +265,30 @@
 
 .endButton {
     font-size: 40px;
-    color: #F5EFE8;
+    color: #2F2824;
     font-family: 'GinAndSoda';
-    background-color: #211c1a;
+    background-color: #F5EFE8;
     width: 230px;
     height: 40px;
     padding: 0 10px 5px;
     clip-path: polygon(2% 0, 98% 1%, 100% 50%, 98% 100%, 2% 100%, 0% 50%);
     cursor: auto;
-    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    /* text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black; */
     animation: reveal 0.25s 4.5s forwards;
     opacity: 0;
     margin: 500px auto 0;
+}
+
+.endWrap {
+    transition: all 0.2s ease;
+    width: 230px;
+    height: 40px;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 4px #F5EFE8);
+}
+
+.endWrap:hover {
+    scale: 110%;
 }
 
 .endButton[clicked='1'] {
